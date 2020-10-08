@@ -1,0 +1,77 @@
+#include "stdio.h"
+#include "stdlib.h"
+#include "iostream"
+#include "math.h"
+
+using namespace std;
+
+class cola
+{ int *items;
+int max;
+int pr;
+int ul;
+int cant;
+public:
+cola(int xmax=0):
+max(xmax)
+{ pr=0;
+ul=0;
+cant=0;
+items=new int[max];
+}
+int vacia(void)
+{ return (cant==0); }
+int insertar(int x)
+{ if (cant<max)
+{ items[ul]=x;
+ul=(ul+1)%max;
+cant++;
+return (x);
+}
+else return (0);
+}
+int suprimir(void)
+{ int x;
+if (vacia())
+{ printf("%s","Pila vacia");
+return(0);
+}
+else
+{ x=items[pr];
+pr=(pr+1)%max;
+cant--;
+return(x);
+}
+}
+void recorrer(void)
+{ int i,j;
+if (!vacia())
+{ i=pr;
+j=0;
+for (i; j<cant ; i=(i+1)%max,j++)
+{ cout<<items[i]<<endl;
+}
+}
+}
+};
+
+main()
+{
+	cola A(50);
+	int maxTiempo=30, Tcajero=5, reloj=0, cajlibre=1, clientesTotal=0;
+	while(reloj != maxTiempo)
+	{
+		if (reloj%2 == 0)
+		{
+			A.insertar(1);
+		}
+		if (cajlibre == 1)
+		{
+			if (A.vacia() != 0)
+			{
+				
+			}
+		}
+	}
+	A.recorrer();
+}
