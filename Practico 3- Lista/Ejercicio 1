@@ -25,30 +25,52 @@ class lista{
 		pos--;
 		if (tope < cant-1)
 		{
-			if (pos <= tope+1)
-			{
 				if (pos == tope+1)
 				{
 					items[++tope] = elem;
 				}
 				else 
 				{
-					if ((-1 < pos) && (pos < cant))
+					if ((-1 < pos) && (pos <= tope))
 					{
 						for (i=tope; i != pos-1; i--)
 						{
 							items[i+1] = items[i];
 						}
-						items[pos] == elem;
+						items[pos] = elem;
 						tope++;
 					}
+					else printf("Posicion incorrecta");
 				}
-			}
-			else printf("Posicion incorrecta");
 		}
-		else printf("Lista llena, imposible insertar mas elementos");
-	return(0);
+		else 
+		{
+			printf("Lista llena, imposible insertar mas elementos\n");
+			return(0);
+		}
 	}
+	
+	int suprimir(int pos)
+	{
+		int i;
+		pos--;
+		if ((-1 < pos) && (pos <= tope))
+		{
+			if (pos == tope)
+				tope--;
+			else
+			{
+				for (i=pos; i != tope; i++)
+					{
+						items[i] = items[i+1];
+					}
+					tope--;
+			}
+		}
+		else printf("Posicion incorrecta");
+		return (0);
+	}
+	
 	int primerElemento(void)
 	{
 		if (!vacia())
@@ -57,6 +79,7 @@ class lista{
 		}
 		else return (0);
 	}
+	
 	int ultimoElemento(void)
 	{
 		if (!vacia())
@@ -65,6 +88,7 @@ class lista{
 		}
 		else return (0);
 	}
+	
 	int recuperar(int pos)
 	{
 		pos--;
@@ -74,6 +98,7 @@ class lista{
 		}
 		else return (0);
 	}
+	
 	int buscar(int elem)
 	{
 		int i=0, j;
@@ -97,6 +122,7 @@ class lista{
 		}
 		else return (-1);
 	}
+	
 	int recorrer(void)
 	{
 		int i;
@@ -113,10 +139,13 @@ class lista{
 
 main ()
 {
-	lista a(3);
+	lista a(5);
 	int b;
-	a.insertar(3,1);
-	a.insertar(2,2);
+	a.insertar(2,1);
+	a.insertar(3,2);
+	a.insertar(4,2);
+	a.insertar(5,2);
+	a.insertar(6,2);
+	a.suprimir(2);
 	a.recorrer();
 }
-
