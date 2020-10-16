@@ -1,0 +1,84 @@
+#include "stdio.h"
+#include "math.h"
+#include "iostream"
+
+using namespace std;
+
+class lista{
+	int *items;
+	int tope;
+	int cant;
+	public:
+		listaSecuencial(int cant1=0):
+		cant(cant1)
+	{
+		tope = -1;
+		items=new int[cant];
+	}
+	int vacia(void)
+	{ 
+		return (tope == -1);
+	}
+	int insertar(int elem, int pos-1)
+	{
+		int i;
+		if (tope < cant-1)
+		{
+			if (pos == tope+1)
+			{
+				items[++tope] = elem;
+			}
+			else 
+			{
+				if ((-1 < pos) && (pos < cant))
+				{
+					for (i=tope; i != pos-1; i--)
+					{
+						items[i+1] = items[i];
+					}
+					items[pos] == elem;
+					tope++;
+				}
+			}
+		}
+		else return (0);
+	}
+	int primerElemento(void)
+	{
+		if (!vacia())
+		{
+			return items[0];
+		}
+		else return (0);
+	}
+	int ultimoElemento(void)
+	{
+		if (!vacia())
+		{
+			return items[tope];
+		}
+		else return (0);
+	}
+	int recuperar(int pos-1)
+	{
+		if ((-1 < pos) && (pos < cant))
+		{
+			return (items[pos]);
+		}
+		else return (0);
+	}
+	int buscar(int elem)
+	{
+		
+	}
+};
+
+main ()
+{
+	
+}
+
+
+
+
+
