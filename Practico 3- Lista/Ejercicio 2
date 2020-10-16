@@ -1,0 +1,75 @@
+#include "stdio.h"
+#include "stdlib.h"
+#include "iostream"
+#include "math.h"
+
+using namespace std;
+
+class celda
+{
+	int sig;
+	int item;
+	public:
+		
+	int obtenerItem(void)
+	{
+		return(item);
+	}
+	
+	void cargarItem(int xitem)
+	{
+		item=xitem;
+	}
+	
+	void cargarSig(int xtope)
+	{
+		sig = xtope;
+	}
+	
+	int obtenerSig(void)
+	{
+		return(sig);
+	}
+};
+
+class listaCursor
+{
+	int cantMax;
+	int cab;
+	int cantElementos;
+	int *items;
+	public:
+		listaCursor(int cantA):
+		cantMax(cantA)
+	{
+		items = new int[cantMax];
+		cantElementos = 0;
+	}
+	int insertar(int elem, int pos)
+	{
+		celda *nuevo;
+		nuevo = new(celda);
+		if (cantElementos != cantMax)
+		{
+			if ((pos > 0) && (pos < cantMax+1))
+			{
+				nuevo->cargarItem(elem);
+			}
+			else
+			{
+				printf("Posicion incorrecta");
+				return (0);
+			}
+		}
+		else
+		{
+			printf("Lista llena");
+			return (0);
+		}
+	}
+};
+
+main()
+{
+	
+}
