@@ -34,42 +34,265 @@ class celda
 
 class listaCursor
 {
+	int i;
 	int cantMax;
 	int cab;
 	int cantElementos;
-	int *items;
+	celda *items;
 	public:
 		listaCursor(int cantA):
 		cantMax(cantA)
 	{
-		items = new int[cantMax];
+		items = new celda[cantMax];
 		cantElementos = 0;
+		cab = -1;
+		for (i=0; i<cantMax; i++)
+		{
+			items[i].cargarSig(-2);
+		}
 	}
+	
+	int vacia(void)
+	{
+		return(cantElementos==0);
+	}
+
+	int buscaEspacioLibre(void)
+	{
+		int i=0,j;
+		while (i<cantMax)
+		{
+			if (items[i].obtenerSig() == -2)
+			{
+				j = i;
+				i = cantMax;
+			}
+			else i++;
+		}
+		return(j);
+	}
+
 	int insertar(int elem, int pos)
 	{
-		celda *nuevo;
-		nuevo = new(celda);
+		int i, aux, ant;
 		if (cantElementos != cantMax)
 		{
-			if ((pos > 0) && (pos < cantMax+1))
+			if ((pos > 0) && (pos <= cantElementos+1))
 			{
-				nuevo->cargarItem(elem);
+				if (vacia())
+				{
+					cab = 0;
+					items[0].cargarSig(-1);
+					items[0].cargarItem(elem);
+					cantElementos++;
+					return (elem);
+				}
+				else
+				{
+					if (pos == 1)
+					{
+						i = buscaEspacioLibre();
+						items[i].cargarSig(cab);
+						items[i].cargarItem(elem);
+						cab = i;
+						cantElementos++;
+						return(elem);
+					}
+					else
+					{
+						aux = cab;
+						i=0;
+						while (i < pos-1)
+						{
+							i++;
+							ant = aux;
+							aux = items[aux].obtenerSig();
+						}
+						i = buscaEspacioLibre();
+						items[i].cargarSig(aux);
+						items[i].cargarItem(elem);
+						items[ant].cargarSig(i);
+						cantElementos++;
+						return(elem);
+					}
+				}
 			}
 			else
 			{
-				printf("Posicion incorrecta");
+				printf("Posicion incorrecta\n");
 				return (0);
 			}
 		}
 		else
 		{
-			printf("Lista llena");
+			printf("Lista llena\n");
 			return (0);
 		}
+	}
+	
+	int suprimir(int pos)
+	{
+		int aux, ant, i;
+		if (!vacia())
+		{
+			if ((pos > 0) && (pos <= cantElementos))
+			{
+				if (pos == 1)
+				{
+					aux = items[cab].obtenerSig();
+					ant = items[cab].obtenerItem();
+					items[cab].cargarSig(-2);
+					cab = aux;
+					cantElementos--;
+					return ant;
+				}
+				else
+				{
+					aux = cab;
+					i=0;
+					while (i < pos-1)
+					{
+						i++;
+						ant = aux;
+						aux = items[aux].obtenerSig();
+					}
+					items[ant].cargarSig(items[aux].obtenerSig());
+					items[aux].cargarSig(-2);
+					cantElementos--;
+					return(items[aux].obtenerItem());
+				}
+			}
+			else
+			{
+				printf("Posicion incorrecta\n");
+				return(0);
+			}
+		}
+		else
+		{
+			printf("Lista vacia\n");
+			return(0);
+		}
+	}
+	
+	int primerElemento(void)
+	{
+		if (!vacia())
+		{
+			return(items[cab].obtenerItem());
+		}
+		else return(0);
+	}
+	
+	int ultimoElemento(void)
+	{
+		int aux, ant;
+		if (!vacia())
+		{
+			aux = cab;
+			while (aux != -1)
+			{
+				ant = aux;
+				aux = items[aux].obtenerSig();
+			}
+			return(items[ant].obtenerItem());
+		}
+		else return(0);
+	}
+	
+	int recuperar(int pos)
+	{
+		int i, aux, ant;
+		if (!vacia())
+		{
+			if ((pos > 0) && (pos <= cantElementos))
+			{
+				aux = cab;
+				ant = cab;
+				i=0;
+				while (i < pos)
+				{
+					i++;
+					ant = aux;
+					aux = items[aux].obtenerSig();
+				}
+				return(items[ant].obtenerItem());	
+			}
+			else
+			{
+				printf("Posicion incorrecta\n");
+				return (0);
+			}
+		}
+		else
+		{
+			printf("Lista vacia\n");
+			return (0);
+		}
+	}
+	
+	int buscar(int elem)
+	{
+		int aux, cont=0;
+		if (!vacia())
+		{
+			aux = cab;
+			while (aux > -1)
+			{
+				if (items[aux].obtenerItem() == elem)
+				{
+					aux = -2;
+				}
+				else
+				{
+					aux = items[aux].obtenerSig();
+				}
+				cont++;
+			}
+			if (aux == -2)
+			return(cont);
+			else return(0);
+		}
+		else
+		{
+			printf("Lista vacia\n");
+			return(0);
+		}
+	}
+	
+	void recorrer(void)
+	{
+		int i;
+		if (!vacia())
+		{
+			i = cab;
+			while (i != -1)
+			{
+				printf("%d\n", items[i].obtenerItem());
+				i = items[i].obtenerSig();
+			}
+		}
+		else
+		{
+			printf("Lista vacia\n");
+		}
+		return;
 	}
 };
 
 main()
 {
-	
+	int a;
+	listaCursor A(5);
+	A.insertar(6, 1);
+	A.insertar(5, 1);
+	A.insertar(4, 3);
+	A.insertar(3, 3);
+	A.insertar(2, 4);
+	A.recorrer();
+	printf("///\n");
+	printf("primer elemento: %d\n", A.primerElemento());
+	printf("ultimo elemento: %d\n", A.ultimoElemento());
+	a = A.buscar(2);
+	printf("recuperado: %d", a);
 }
