@@ -1,0 +1,30 @@
+#include <iostream>
+#include <fstream>
+#include <sstream>
+using namespace std;
+
+main()
+{
+ifstream archivo; 
+string linea;
+int i=-2, j=0, a;
+string A[200][15];
+archivo.open("forestales.csv", ios::in);
+while (getline(archivo, linea))
+{
+    string columna;
+    stringstream strstr(linea); // Convierte a string la linea obtenida
+    i++;
+    if (i != -1)
+    {
+        while (getline(strstr, columna, ';'))
+        {
+            A[i][j] = columna; 
+            j++;
+        }
+    }
+    j = 0;
+}
+i++;
+while()
+}
